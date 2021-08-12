@@ -876,7 +876,20 @@ bbr_convert(void *ctxp, const struct tcp_log_buffer *in, struct tcp_log_buffer *
 		memcpy(out, in, sizeof(struct tcp_log_buffer));
 		return (0);
 	}
-	if (ctx->pc_tlh->tlh_version == TCP_LOG_VER_7) {
+	if (ctx->pc_tlh->tlh_version == TCP_LOG_VER_6) {
+		/*
+		 * Version 6 are used on FreeBSD 12.1. By comparing the internal
+		 * TLB structure, most of the fields are the same. It's not
+		 * guranteed that calling this conversion will get a correct
+		 * results for all scenarios. 
+		 *
+		 * In addition, to properly run tcplog_dumper on FreeBSD 12.1,
+		 * a change to the internal TLB is required.
+		 *
+		 */
+		convert_v8_to_cur(in, out);
+		return (0);
+	}else if (ctx->pc_tlh->tlh_version == TCP_LOG_VER_7) {
 		/* 
 		 * Version 7 converts the same as version 8  
 		 * except sacknewdata became flex3

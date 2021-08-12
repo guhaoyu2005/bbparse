@@ -27,8 +27,10 @@
  * SUCH DAMAGE.
  *
  */
+
 #define TCP_LOG_VER_8		(8)	/* Previous version V9 adds 2 new fids */
 #define TCP_LOG_VER_7		(7)	/* Version before that sacknewdata becomes flex3 */
+#define TCP_LOG_VER_6		(6)	/* Most fields are compatible with later ver */
 
 /*
  * This holds the Version 8 type data for
